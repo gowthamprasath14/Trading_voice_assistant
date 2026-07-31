@@ -13,12 +13,21 @@
 
   "host_permissions": [
     "https://*.dhan.co/*",
-    "https://*.zerodha.com/*",
-    "https://*.angelone.in/*",
-    "https://*.groww.in/*",
-    "https://*.upstox.com/*",
+    "https://opencharts.dhan.co/*",
+
     "https://*.tradingview.com/*",
-    "https://opencharts.dhan.co/*"
+
+    "https://kite.zerodha.com/*",
+
+    "https://*.groww.in/*",
+
+    "https://*.upstox.com/*",
+
+    "https://www.angelone.in/*",
+
+    "https://ant.aliceblueonline.com/*",
+
+    "https://trade.fyers.in/*"
   ],
 
   "background": {
@@ -30,14 +39,12 @@
     {
       "matches": [
         "https://*.dhan.co/*",
-        "https://*.zerodha.com/*",
-        "https://*.angelone.in/*",
+        "https://kite.zerodha.com/*",
         "https://*.groww.in/*",
-        "https://*.upstox.com/*"
-      ],
-
-      "exclude_matches": [
-        "https://opencharts.dhan.co/*"
+        "https://*.upstox.com/*",
+        "https://www.angelone.in/*",
+        "https://ant.aliceblueonline.com/*",
+        "https://trade.fyers.in/*"
       ],
 
       "js": [
@@ -55,7 +62,10 @@
     {
       "matches": [
         "https://*.tradingview.com/*",
-        "https://opencharts.dhan.co/*"
+        "https://opencharts.dhan.co/*",
+        "https://trade.fyers.in/*",
+        "https://ant.aliceblueonline.com/*",
+        "https://www.angelone.in/*"
       ],
 
       "js": [
@@ -77,7 +87,10 @@
 
       "matches": [
         "https://*.tradingview.com/*",
-        "https://opencharts.dhan.co/*"
+        "https://opencharts.dhan.co/*",
+        "https://trade.fyers.in/*",
+        "https://ant.aliceblueonline.com/*",
+        "https://www.angelone.in/*"
       ]
     }
   ],
