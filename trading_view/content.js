@@ -324,22 +324,13 @@ submitButton.addEventListener("click", () => {
     status.textContent = "Sending...";
 
     // Send the price to pageScript.js
-chrome.runtime.sendMessage(
-    {
-        action: "CREATE_HORIZONTAL_RAY",
-        price: price
-    },
-    () => {
-        if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError);
-            status.textContent = "Extension Error";
-            return;
-        }
 
-        status.textContent = "Waiting for TradingView...";
-    }
-);
-    
+    chrome.runtime.sendMessage({
+    action: "CREATE_HORIZONTAL_RAY",
+    price: price
+});
+
+status.textContent = "Waiting for TradingView...";
 
 });
 }
