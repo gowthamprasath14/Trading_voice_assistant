@@ -1,0 +1,237 @@
+/* ==========================================
+   Voice Horizontal Ray
+   content.css
+========================================== */
+
+#voice-horizontal-ray-root{
+    position:fixed;
+    top:50%;
+    right:20px;
+    transform:translateY(-50%);
+    z-index:999999999;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+/* Floating Mic */
+
+#vhr-mic-button{
+
+    width:60px;
+    height:60px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:30px;
+
+    cursor:pointer;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.25);
+
+    transition:.25s;
+
+    user-select:none;
+
+}
+
+#vhr-mic-button:hover{
+
+    transform:scale(1.08);
+
+}
+
+/* Panel */
+
+#vhr-panel{
+
+    position:absolute;
+
+    right:75px;
+
+    top:-60px;
+
+    width:320px;
+
+    background:white;
+
+    border-radius:14px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.25);
+
+    padding:18px;
+
+    display:none;
+
+    animation:fadeIn .25s;
+
+}
+
+/* Open */
+
+#vhr-panel.open{
+
+    display:block;
+
+}
+
+/* Header */
+
+#vhr-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:15px;
+
+}
+
+/* Close */
+
+#vhr-close{
+
+    border:none;
+
+    background:none;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+}
+
+/* Sections */
+
+.vhr-section{
+
+    margin-bottom:15px;
+
+}
+
+/* Status */
+
+#vhr-status{
+
+    background:#f3f4f6;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+}
+
+/* Buttons */
+
+#vhr-speak,
+#vhr-submit{
+
+    width:100%;
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:12px;
+
+    font-size:16px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+#vhr-speak{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+#vhr-speak:hover{
+
+    background:#1d4ed8;
+
+}
+
+#vhr-submit{
+
+    background:#16a34a;
+
+    color:white;
+
+}
+
+#vhr-submit:hover{
+
+    background:#15803d;
+
+}
+
+/* Textbox */
+
+#vhr-price{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:8px;
+
+    font-size:18px;
+
+    border-radius:8px;
+
+    border:1px solid #d1d5db;
+
+    box-sizing:border-box;
+
+}
+
+#vhr-price:focus{
+
+    outline:none;
+
+    border-color:#2563eb;
+
+}
+
+/* Animation */
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateX(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateX(0);
+
+    }
+
+}

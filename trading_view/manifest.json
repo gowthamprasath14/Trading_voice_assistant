@@ -1,0 +1,95 @@
+{
+  "manifest_version": 3,
+
+  "name": "Voice Horizontal Ray",
+
+  "description": "Create TradingView Horizontal Rays using voice commands.",
+
+  "version": "1.0.0",
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "host_permissions": [
+    "https://*.dhan.co/*",
+    "https://*.zerodha.com/*",
+    "https://*.angelone.in/*",
+    "https://*.groww.in/*",
+    "https://*.upstox.com/*",
+    "https://*.tradingview.com/*",
+    "https://opencharts.dhan.co/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+
+    {
+      "matches": [
+        "https://*.dhan.co/*",
+        "https://*.zerodha.com/*",
+        "https://*.angelone.in/*",
+        "https://*.groww.in/*",
+        "https://*.upstox.com/*"
+      ],
+
+      "exclude_matches": [
+        "https://opencharts.dhan.co/*"
+      ],
+
+      "js": [
+        "priceParser.js",
+        "content.js"
+      ],
+
+      "css": [
+        "content.css"
+      ],
+
+      "run_at": "document_idle"
+    },
+
+    {
+      "matches": [
+        "https://*.tradingview.com/*",
+        "https://opencharts.dhan.co/*"
+      ],
+
+      "js": [
+        "frame.js"
+      ],
+
+      "run_at": "document_idle",
+
+      "all_frames": true
+    }
+
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pageScript.js"
+      ],
+
+      "matches": [
+        "https://*.tradingview.com/*",
+        "https://opencharts.dhan.co/*"
+      ]
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_title": "Voice Horizontal Ray"
+  }
+}
