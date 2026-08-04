@@ -29,7 +29,9 @@
     "https://ant.aliceblueonline.com/*",
 
     "https://trade.fyers.in/*",
-    "https://fyers.in/*"
+    "https://fyers.in/*",
+
+    "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
   ],
 
   "background": {
@@ -80,7 +82,9 @@
 
         "https://ant.aliceblueonline.com/*",
 
-        "https://www.angelone.in/*"
+        "https://www.angelone.in/*",
+
+        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
       ],
 
       "js": [
@@ -110,7 +114,9 @@
 
         "https://ant.aliceblueonline.com/*",
 
-        "https://www.angelone.in/*"
+        "https://www.angelone.in/*",
+
+        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
       ]
     }
   ],
