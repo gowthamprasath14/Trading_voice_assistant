@@ -77,6 +77,8 @@
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
 
+        "https://*.groww.in/*",
+
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
 
@@ -108,6 +110,8 @@
 
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
+
+        "https://*.groww.in/*",
 
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
