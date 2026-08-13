@@ -1,21 +1,26 @@
 // ===============================================
 // Voice Horizontal Ray
 // content.js
-// Part 1
 // ===============================================
 
-// Prevent duplicate loading
 console.log("✅ content.js loaded");
+
 const IS_TOP = window === window.top;
 
+// ===============================================
+// Don't create UI inside iframes
+// ===============================================
+
 if (!IS_TOP) {
+
     console.log("Running inside iframe.");
-    // Don't create the floating UI here.
+
 } else if (document.getElementById("voice-horizontal-ray-root")) {
 
     console.log("Voice Horizontal Ray already loaded.");
 
 } else {
+
     // ==========================================
     // Root
     // ==========================================
@@ -23,6 +28,7 @@ if (!IS_TOP) {
     const root = document.createElement("div");
 
     root.id = "voice-horizontal-ray-root";
+
 
     // ==========================================
     // Floating Mic
@@ -33,6 +39,7 @@ if (!IS_TOP) {
     micButton.id = "vhr-mic-button";
 
     micButton.innerHTML = "🎤";
+
 
     // ==========================================
     // Panel
@@ -52,6 +59,7 @@ if (!IS_TOP) {
 
         </div>
 
+
         <div class="vhr-section">
 
             <div id="vhr-status">
@@ -62,6 +70,7 @@ if (!IS_TOP) {
 
         </div>
 
+
         <div class="vhr-section">
 
             <button id="vhr-speak">
@@ -71,6 +80,7 @@ if (!IS_TOP) {
             </button>
 
         </div>
+
 
         <div class="vhr-section">
 
@@ -92,6 +102,7 @@ if (!IS_TOP) {
 
         </div>
 
+
         <div class="vhr-section">
 
             <button id="vhr-submit">
@@ -104,11 +115,13 @@ if (!IS_TOP) {
 
     `;
 
+
     root.appendChild(micButton);
 
     root.appendChild(panel);
 
     document.body.appendChild(root);
+
 
     // ==========================================
     // DOM
@@ -124,213 +137,643 @@ if (!IS_TOP) {
 
     const closeButton = document.getElementById("vhr-close");
 
+
     // ==========================================
     // Open / Close
     // ==========================================
 
-    function openPanel(){
+    function openPanel() {
 
         panel.classList.add("open");
 
     }
 
-    function closePanel(){
+
+    function closePanel() {
 
         panel.classList.remove("open");
 
     }
 
-    micButton.addEventListener("click",openPanel);
 
-    closeButton.addEventListener("click",closePanel);
+    micButton.addEventListener("click", openPanel);
+
+    closeButton.addEventListener("click", closePanel);
+
 
     // ==========================================
-    // PART 2 BELOW
+    // PART 2
+    // Speech Recognition
     // ==========================================
-    // ==========================================
-// PART 2
-// Speech Recognition
-// ==========================================
 
-const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
 
-let recognition = null;
 
-if (!SpeechRecognition) {
+    let recognition = null;
 
-    status.textContent = "Speech Recognition Not Supported";
 
-} else {
+    if (!SpeechRecognition) {
 
-    recognition = new SpeechRecognition();
+        status.textContent =
+            "Speech Recognition Not Supported";
 
-    recognition.lang = "en-US";
+    } else {
 
-    recognition.continuous = false;
+        recognition = new SpeechRecognition();
 
-    recognition.interimResults = true;
+        recognition.lang = "en-US";
 
-    recognition.maxAlternatives = 1;
+        recognition.continuous = false;
 
-    recognition.onstart = () => {
+        recognition.interimResults = true;
 
-        status.textContent = "🎤 Listening...";
+        recognition.maxAlternatives = 1;
 
-        speakButton.disabled = true;
 
-    };
+        recognition.onstart = () => {
 
-    recognition.onspeechstart = () => {
+            status.textContent = "🎤 Listening...";
 
-        status.textContent = "Speaking...";
+            speakButton.disabled = true;
 
-    };
+        };
 
-    recognition.onspeechend = () => {
 
-        status.textContent = "Processing...";
+        recognition.onspeechstart = () => {
 
-    };
+            status.textContent = "Speaking...";
 
-    recognition.onresult = (event) => {
+        };
 
-        let transcript = "";
 
-        for (
-            let i = event.resultIndex;
-            i < event.results.length;
-            i++
-        ) {
+        recognition.onspeechend = () => {
 
-            transcript += event.results[i][0].transcript;
+            status.textContent = "Processing...";
 
-        }
+        };
 
-        transcript = transcript.trim();
 
-        priceBox.value = transcript;
+        recognition.onresult = (event) => {
 
-        status.textContent = "Speech Recognized";
+            let transcript = "";
 
-    };
 
-    recognition.onerror = (event) => {
+            for (
+                let i = event.resultIndex;
+                i < event.results.length;
+                i++
+            ) {
 
-        console.error(event);
+                transcript +=
+                    event.results[i][0].transcript;
 
-        switch (event.error) {
+            }
 
-            case "no-speech":
-                status.textContent = "No speech detected";
-                break;
 
-            case "audio-capture":
-                status.textContent = "Microphone not found";
-                break;
+            transcript = transcript.trim();
 
-            case "not-allowed":
-                status.textContent = "Microphone permission denied";
-                break;
+            priceBox.value = transcript;
 
-            default:
+            status.textContent =
+                "Speech Recognized";
+
+            console.log(
+                "🎤 Speech:",
+                transcript
+            );
+
+        };
+
+
+        recognition.onerror = (event) => {
+
+            console.error(
+                "❌ Speech recognition error:",
+                event
+            );
+
+
+            switch (event.error) {
+
+                case "no-speech":
+
+                    status.textContent =
+                        "No speech detected";
+
+                    break;
+
+
+                case "audio-capture":
+
+                    status.textContent =
+                        "Microphone not found";
+
+                    break;
+
+
+                case "not-allowed":
+
+                    status.textContent =
+                        "Microphone permission denied";
+
+                    break;
+
+
+                default:
+
+                    status.textContent =
+                        "Error : " +
+                        event.error;
+
+            }
+
+
+            speakButton.disabled = false;
+
+        };
+
+
+        recognition.onend = () => {
+
+            speakButton.disabled = false;
+
+
+            if (
+                status.textContent ===
+                "Processing..."
+            ) {
+
+                status.textContent = "Ready";
+
+            }
+
+        };
+
+
+        speakButton.addEventListener(
+            "click",
+            () => {
+
                 status.textContent =
-                    "Error : " + event.error;
+                    "Starting...";
+
+
+                try {
+
+                    recognition.start();
+
+                } catch (error) {
+
+                    console.error(
+                        "❌ Recognition start error:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    // ==========================================
+    // PART 3
+    // Groww TradingView Ray
+    // ==========================================
+
+    async function createGrowwRay(price) {
+
+        console.log(
+            "🎯 Creating Groww ray at:",
+            price
+        );
+
+
+        // Find Groww TradingView iframe
+
+        const frame =
+            document.querySelector(
+                'iframe[id^="tradingview_"]'
+            );
+
+
+        if (!frame) {
+
+            console.error(
+                "❌ Groww TradingView iframe not found"
+            );
+
+            status.textContent =
+                "TradingView chart not found";
+
+            return false;
 
         }
 
-        speakButton.disabled = false;
 
-    };
+        console.log(
+            "✅ TradingView iframe found:",
+            frame
+        );
 
-    recognition.onend = () => {
 
-        speakButton.disabled = false;
+        // Get iframe window
+
+        const w = frame.contentWindow;
+
+
+        if (!w) {
+
+            console.error(
+                "❌ Cannot access iframe window"
+            );
+
+            status.textContent =
+                "Cannot access chart";
+
+            return false;
+
+        }
+
+
+        // Groww exposes TradingView API as tradingViewApi
+
+        const tradingViewApi =
+            w.tradingViewApi;
+
+
+        if (!tradingViewApi) {
+
+            console.error(
+                "❌ tradingViewApi not found"
+            );
+
+            status.textContent =
+                "TradingView API not ready";
+
+            return false;
+
+        }
+
+
+        console.log(
+            "✅ tradingViewApi found:",
+            tradingViewApi
+        );
+
+
+        // Get active chart
+
+        let chart;
+
+
+        try {
+
+            chart =
+                tradingViewApi.activeChart();
+
+        } catch (error) {
+
+            console.error(
+                "❌ activeChart() failed:",
+                error
+            );
+
+            status.textContent =
+                "Chart not ready";
+
+            return false;
+
+        }
+
+
+        if (!chart) {
+
+            console.error(
+                "❌ Active chart not found"
+            );
+
+            status.textContent =
+                "Active chart not found";
+
+            return false;
+
+        }
+
+
+        console.log(
+            "✅ Active chart found:",
+            chart
+        );
+
+
+        // Check createShape
 
         if (
-            status.textContent === "Processing..."
+            typeof chart.createShape !==
+            "function"
         ) {
 
-            status.textContent = "Ready";
+            console.error(
+                "❌ chart.createShape is not available"
+            );
+
+            status.textContent =
+                "Ray API unavailable";
+
+            return false;
 
         }
 
-    };
 
-    speakButton.addEventListener("click", () => {
+        // Get visible range
 
-        status.textContent = "Starting...";
+        let range;
 
-        recognition.start();
 
-    });
+        try {
 
-}
-// ==========================================
-// PART 3
-// Submit Button
-// ==========================================
+            range =
+                chart.getVisibleRange();
 
-submitButton.addEventListener("click", () => {
+        } catch (error) {
 
-    let text = priceBox.value.trim();
+            console.error(
+                "❌ getVisibleRange() failed:",
+                error
+            );
 
-    if (text === "") {
+            status.textContent =
+                "Chart range unavailable";
 
-        alert("Please enter or speak a price.");
-
-        return;
-
-    }
-
-    let price;
-
-    // Already numeric
-    if (!isNaN(text)) {
-
-        price = parseFloat(text);
-
-    }
-
-    // Convert words to number
-    else {
-
-        if (typeof convertSpeechToPrice === "function") {
-
-            price = convertSpeechToPrice(text);
-
-        }
-        else {
-
-            alert("Price parser not loaded.");
-
-            return;
+            return false;
 
         }
 
+
+        if (
+            !range ||
+            range.from == null
+        ) {
+
+            console.error(
+                "❌ Invalid visible range:",
+                range
+            );
+
+            status.textContent =
+                "Chart range unavailable";
+
+            return false;
+
+        }
+
+
+        console.log(
+            "📐 Visible range:",
+            range
+        );
+
+
+        // ======================================
+        // Create Horizontal Ray
+        // ======================================
+
+        try {
+
+            status.textContent =
+                "Creating ray...";
+
+
+            const shapeId =
+                await chart.createShape(
+
+                    {
+                        time: range.from,
+                        price: Number(price)
+                    },
+
+                    {
+                        shape: "horizontal_ray"
+                    }
+
+                );
+
+
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "✅ GROWW HORIZONTAL RAY CREATED"
+            );
+
+            console.log(
+                "Price:",
+                price
+            );
+
+            console.log(
+                "Shape ID:",
+                shapeId
+            );
+
+            console.log(
+                "================================="
+            );
+
+
+            status.textContent =
+                "✅ Ray created at " +
+                price;
+
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "❌ Failed to create Groww ray:",
+                error
+            );
+
+            status.textContent =
+                "❌ Failed to create ray";
+
+            return false;
+
+        }
+
     }
 
-    if (price === null || isNaN(price)) {
 
-        alert("Invalid price.");
+    // ==========================================
+    // PART 4
+    // Submit Button
+    // ==========================================
 
-        return;
+    submitButton.addEventListener(
+        "click",
+        async () => {
 
-    }
+            let text =
+                priceBox.value.trim();
 
-    console.log("Price:", price);
 
-    status.textContent = "Sending...";
+            // Empty input
 
-    // Send the price to pageScript.js
+            if (text === "") {
 
-    chrome.runtime.sendMessage({
-    action: "CREATE_HORIZONTAL_RAY",
-    price: price
-});
+                alert(
+                    "Please enter or speak a price."
+                );
 
-status.textContent = "Waiting for TradingView...";
+                return;
 
-});
+            }
+
+
+            let price;
+
+
+            // ======================================
+            // Already numeric
+            // ======================================
+
+            if (!isNaN(text)) {
+
+                price =
+                    parseFloat(text);
+
+            }
+
+
+            // ======================================
+            // Convert spoken words to number
+            // ======================================
+
+            else {
+
+                if (
+                    typeof convertSpeechToPrice ===
+                    "function"
+                ) {
+
+                    price =
+                        convertSpeechToPrice(text);
+
+                } else {
+
+                    alert(
+                        "Price parser not loaded."
+                    );
+
+                    return;
+
+                }
+
+            }
+
+
+            // ======================================
+            // Validate price
+            // ======================================
+
+            if (
+                price === null ||
+                price === undefined ||
+                isNaN(price)
+            ) {
+
+                alert(
+                    "Invalid price."
+                );
+
+                return;
+
+            }
+
+
+            price =
+                Number(price);
+
+
+            console.log(
+                "💰 Price:",
+                price
+            );
+
+
+            // ======================================
+            // Detect Groww
+            // ======================================
+
+            const isGroww =
+                location.hostname
+                    .toLowerCase()
+                    .includes("groww.in");
+
+
+            if (isGroww) {
+
+                console.log(
+                    "🟢 Groww detected"
+                );
+
+
+                const success =
+                    await createGrowwRay(
+                        price
+                    );
+
+
+                if (success) {
+
+                    console.log(
+                        "🎯 Groww ray completed"
+                    );
+
+                }
+
+
+                return;
+
+            }
+
+
+            // ======================================
+            // Other brokers
+            // ======================================
+
+            status.textContent =
+                "Sending...";
+
+
+            console.log(
+                "📤 Sending price to existing ray system:",
+                price
+            );
+
+
+            chrome.runtime.sendMessage({
+
+                action:
+                    "CREATE_HORIZONTAL_RAY",
+
+                price:
+                    price
+
+            });
+
+
+            status.textContent =
+                "Waiting for TradingView...";
+
+        }
+
+    );
+
 }
