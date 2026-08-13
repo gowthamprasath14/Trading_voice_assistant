@@ -6,92 +6,99 @@
 
 console.log("✅ Voice Horizontal Ray - Page Script Loaded");
 
+// ------------------------------------------
 // Listen for requests from frame.js
-window.addEventListener("VOICE_HORIZONTAL_RAY", (event) => {
+// ------------------------------------------
 
-    const price = Number(event.detail.price);
+window.addEventListener("VOICE_HORIZONTAL_RAY", async (event) => {
 
-    console.log("Received price:", price);
+    const price = Number(event.detail?.price);
 
-    if (isNaN(price)) {
+    console.log("📩 Received price:", price);
 
-        console.error("❌ Invalid price.");
-
+    if (!Number.isFinite(price)) {
+        console.error("❌ Invalid price:", event.detail?.price);
         return;
-
     }
 
     // --------------------------------------
     // Locate TradingView Widget
     // --------------------------------------
 
-    let widget = null;
+    const widget = window.tvWidget;
 
-    for (const obj of Object.values(window)) {
-
-        try {
-
-            if (
-                obj &&
-                typeof obj === "object" &&
-                typeof obj.activeChart === "function"
-            ) {
-
-                widget = obj;
-
-                break;
-
-            }
-
-        }
-        catch (e) {}
-
-    }
+    console.log("🔎 tvWidget:", widget);
 
     if (!widget) {
-
-        console.error("❌ TradingView widget not found.");
-
+        console.error("❌ tvWidget not found.");
         return;
+    }
 
+    if (typeof widget.activeChart !== "function") {
+        console.error("❌ tvWidget.activeChart is not a function.");
+        return;
     }
 
     console.log("✅ TradingView widget found.");
 
     // --------------------------------------
-    // Create Horizontal Ray
+    // Get Active Chart
     // --------------------------------------
 
     try {
 
         const chart = widget.activeChart();
 
+        console.log("📊 Active chart:", chart);
+
+        if (!chart) {
+            console.error("❌ Active chart not available.");
+            return;
+        }
+
+        if (typeof chart.createShape !== "function") {
+            console.error("❌ chart.createShape is not available.");
+            return;
+        }
+
+        // ----------------------------------
+        // Get Visible Chart Range
+        // ----------------------------------
+
         const range = chart.getVisibleRange();
 
-        const shapeId = chart.createShape(
+        console.log("📐 Visible range:", range);
 
+        if (!range || range.from == null) {
+            console.error("❌ Could not get chart visible range.");
+            return;
+        }
+
+        // ----------------------------------
+        // Create Horizontal Ray
+        // ----------------------------------
+
+        console.log("🎯 Creating ray at price:", price);
+
+        const shapeId = await chart.createShape(
             {
                 time: range.from,
                 price: price
             },
-
             {
                 shape: "horizontal_ray"
             }
-
         );
 
         console.log("=================================");
-        console.log("✅ Horizontal Ray Created");
+        console.log("✅ HORIZONTAL RAY CREATED");
         console.log("Price :", price);
         console.log("Shape :", shapeId);
         console.log("=================================");
 
-    }
-    catch (err) {
+    } catch (err) {
 
         console.error("❌ Failed to create Horizontal Ray");
-
         console.error(err);
 
     }
