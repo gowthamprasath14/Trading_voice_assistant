@@ -1,69 +1,110 @@
 // ==========================================
 // frame.js
-// Runs inside TradingView / broker frames
-// Bridges extension messages to pageScript.js
+// Runs inside TradingView / broker iframe
 // ==========================================
 
-console.log("✅ Voice Horizontal Ray - frame.js loaded");
-
-
-// ==========================================
-// Inject pageScript.js into PAGE context
-// ==========================================
-
-const script = document.createElement("script");
-
-script.src = chrome.runtime.getURL("pageScript.js");
-
-script.onload = () => {
-
-    console.log("✅ pageScript.js injected successfully");
-
-    // Remove script tag after execution
-    script.remove();
-
-};
-
-
-// Handle injection errors
-script.onerror = () => {
-
-    console.error("❌ Failed to inject pageScript.js");
-
-};
-
-
-// Inject into the current frame
-(document.head || document.documentElement).appendChild(script);
+console.log("✅ frame.js loaded");
 
 
 // ==========================================
-// Receive message from background.js
+// INJECT pageScript.js INTO PAGE CONTEXT
 // ==========================================
 
-chrome.runtime.onMessage.addListener((message) => {
+function injectPageScript() {
 
-    if (!message || message.action !== "CREATE_HORIZONTAL_RAY") {
+    // Prevent duplicate injection
+    if (document.querySelector(
+        'script[data-voice-horizontal-ray="true"]'
+    )) {
+        console.log("⚠️ pageScript.js already injected");
         return;
     }
 
-    console.log("📩 frame.js received ray request");
 
-    console.log("💰 Price received:", message.price);
+    const script = document.createElement("script");
+
+    script.src = chrome.runtime.getURL("pageScript.js");
+
+    script.dataset.voiceHorizontalRay = "true";
 
 
-    // ======================================
-    // Send price to pageScript.js
-    // ======================================
+    script.onload = () => {
 
-    window.dispatchEvent(
-        new CustomEvent("VOICE_HORIZONTAL_RAY", {
-            detail: {
-                price: message.price
-            }
-        })
-    );
+        console.log("✅ pageScript.js injected successfully");
 
-    console.log("📤 Ray request sent to pageScript.js");
+        script.remove();
 
-});
+    };
+
+
+    script.onerror = (err) => {
+
+        console.error(
+            "❌ Failed to inject pageScript.js",
+            err
+        );
+
+    };
+
+
+    (
+        document.head ||
+        document.documentElement
+    ).appendChild(script);
+
+}
+
+
+// ==========================================
+// INJECT SCRIPT
+// ==========================================
+
+injectPageScript();
+
+
+// ==========================================
+// RECEIVE MESSAGE FROM background.js
+// ==========================================
+
+chrome.runtime.onMessage.addListener(
+    (message, sender, sendResponse) => {
+
+        if (
+            !message ||
+            message.action !== "CREATE_HORIZONTAL_RAY"
+        ) {
+            return;
+        }
+
+
+        console.log(
+            "📩 frame.js received price:",
+            message.price
+        );
+
+
+        // --------------------------------------
+        // Forward price to pageScript.js
+        // --------------------------------------
+
+        window.dispatchEvent(
+
+            new CustomEvent(
+                "VOICE_HORIZONTAL_RAY",
+                {
+                    detail: {
+                        price: message.price
+                    }
+                }
+            )
+
+        );
+
+
+        console.log(
+            "📤 Price forwarded to pageScript.js:",
+            message.price
+        );
+
+    }
+);
