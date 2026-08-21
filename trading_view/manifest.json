@@ -1,7 +1,10 @@
 {
   "manifest_version": 3,
+
   "name": "Voice Horizontal Ray",
+
   "description": "Create TradingView Horizontal Rays using voice commands.",
+
   "version": "1.0.0",
 
   "permissions": [
@@ -28,7 +31,16 @@
     "https://trade.fyers.in/*",
     "https://fyers.in/*",
 
-    "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
+    "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
+
+    "https://pro.upstox.com/*",
+
+    "https://tv.5paisa.com/*",
+
+    "https://*.samco.in/*",
+    "https://tv.samco.in/*",
+
+    "https://flow.rupeezy.in/*"
   ],
 
   "background": {
@@ -39,7 +51,10 @@
     {
       "matches": [
         "https://*.dhan.co/*",
+        "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
+
+        "https://*.tradingview.com/*",
 
         "https://kite.zerodha.com/*",
 
@@ -52,16 +67,32 @@
         "https://ant.aliceblueonline.com/*",
 
         "https://trade.fyers.in/*",
-        "https://fyers.in/*"
+        "https://fyers.in/*",
+
+        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
+
+        "https://pro.upstox.com/*",
+
+        "https://tv.5paisa.com/*",
+
+        "https://*.samco.in/*",
+        "https://tv.samco.in/*",
+
+        "https://flow.rupeezy.in/*"
       ],
+
       "js": [
         "priceParser.js",
         "content.js"
       ],
+
       "css": [
         "content.css"
       ],
-      "run_at": "document_idle"
+
+      "run_at": "document_idle",
+
+      "all_frames": true
     },
 
     {
@@ -71,8 +102,6 @@
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
 
-        "https://*.groww.in/*",
-
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
 
@@ -80,13 +109,29 @@
 
         "https://www.angelone.in/*",
 
-        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
+        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
+
+        "https://pro.upstox.com/*",
+
+        "https://tv.5paisa.com/*",
+
+        "https://*.groww.in/*",
+
+        "https://*.samco.in/*",
+        "https://tv.samco.in/*",
+
+        "https://flow.rupeezy.in/*"
       ],
+
       "js": [
         "frame.js"
       ],
+
       "run_at": "document_idle",
-      "all_frames": true
+
+      "all_frames": true,
+
+      "match_origin_as_fallback": true
     }
   ],
 
@@ -95,13 +140,12 @@
       "resources": [
         "pageScript.js"
       ],
+
       "matches": [
         "https://*.tradingview.com/*",
 
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
-
-        "https://*.groww.in/*",
 
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
@@ -110,7 +154,18 @@
 
         "https://www.angelone.in/*",
 
-        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*"
+        "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
+
+        "https://pro.upstox.com/*",
+
+        "https://tv.5paisa.com/*",
+
+        "https://*.groww.in/*",
+
+        "https://*.samco.in/*",
+        "https://tv.samco.in/*",
+
+        "https://flow.rupeezy.in/*"
       ]
     }
   ],
