@@ -1,45 +1,30 @@
 {
   "manifest_version": 3,
-
-  "name": "Voice Horizontal Ray",
-
-  "description": "Create TradingView Horizontal Rays using voice commands.",
-
-  "version": "1.0.0",
-
+  "name": "Voice trigger alarm",
+  "description": "Create price alerts for TradingView.",
+  "version": "1.0",
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "storage"
   ],
 
   "host_permissions": [
     "https://*.dhan.co/*",
     "https://opencharts.dhan.co/*",
     "https://tv.dhan.co/*",
-
     "https://*.tradingview.com/*",
-
     "https://kite.zerodha.com/*",
-
     "https://*.groww.in/*",
-
     "https://*.upstox.com/*",
-
     "https://www.angelone.in/*",
-
     "https://ant.aliceblueonline.com/*",
-
     "https://trade.fyers.in/*",
     "https://fyers.in/*",
-
     "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
-
     "https://pro.upstox.com/*",
-
     "https://tv.5paisa.com/*",
-
     "https://*.samco.in/*",
     "https://tv.samco.in/*",
-
     "https://flow.rupeezy.in/*"
   ],
 
@@ -53,84 +38,56 @@
         "https://*.dhan.co/*",
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
-
         "https://*.tradingview.com/*",
-
         "https://kite.zerodha.com/*",
-
         "https://*.groww.in/*",
-
         "https://*.upstox.com/*",
-
         "https://www.angelone.in/*",
-
         "https://ant.aliceblueonline.com/*",
-
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
-
         "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
-
         "https://pro.upstox.com/*",
-
         "https://tv.5paisa.com/*",
-
         "https://*.samco.in/*",
         "https://tv.samco.in/*",
-
         "https://flow.rupeezy.in/*"
       ],
-
       "js": [
-        "priceParser.js",
         "content.js"
       ],
-
       "css": [
         "content.css"
       ],
-
       "run_at": "document_idle",
-
       "all_frames": true
     },
 
     {
       "matches": [
-        "https://*.tradingview.com/*",
-
+        "https://*.dhan.co/*",
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
-
+        "https://*.tradingview.com/*",
+        "https://kite.zerodha.com/*",
+        "https://*.groww.in/*",
+        "https://*.upstox.com/*",
+        "https://www.angelone.in/*",
+        "https://ant.aliceblueonline.com/*",
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
-
-        "https://ant.aliceblueonline.com/*",
-
-        "https://www.angelone.in/*",
-
         "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
-
         "https://pro.upstox.com/*",
-
         "https://tv.5paisa.com/*",
-
-        "https://*.groww.in/*",
-
         "https://*.samco.in/*",
         "https://tv.samco.in/*",
-
         "https://flow.rupeezy.in/*"
       ],
-
       "js": [
         "frame.js"
       ],
-
       "run_at": "document_idle",
-
       "all_frames": true,
-
       "match_origin_as_fallback": true
     }
   ],
@@ -138,34 +95,28 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "pageScript.js"
+        "pageScript.js",
+        "audio.mp3"
       ],
-
       "matches": [
-        "https://*.tradingview.com/*",
-
+        "https://*.dhan.co/*",
         "https://opencharts.dhan.co/*",
         "https://tv.dhan.co/*",
-
+        "https://*.tradingview.com/*",
+        "https://kite.zerodha.com/*",
+        "https://*.groww.in/*",
+        "https://*.upstox.com/*",
+        "https://www.angelone.in/*",
+        "https://ant.aliceblueonline.com/*",
         "https://trade.fyers.in/*",
         "https://fyers.in/*",
-
-        "https://ant.aliceblueonline.com/*",
-
-        "https://www.angelone.in/*",
-
         "https://6r8bhd8hwi.execute-api.ap-south-1.amazonaws.com/*",
-
         "https://pro.upstox.com/*",
-
         "https://tv.5paisa.com/*",
-
-        "https://*.groww.in/*",
-
         "https://*.samco.in/*",
         "https://tv.samco.in/*",
-
-        "https://flow.rupeezy.in/*"
+        "https://flow.rupeezy.in/*",
+        "<all_urls>"
       ]
     }
   ],
@@ -178,6 +129,6 @@
   },
 
   "action": {
-    "default_title": "Voice Horizontal Ray"
+    "default_title": "Voice trigger alarm"
   }
 }

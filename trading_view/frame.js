@@ -1,9 +1,10 @@
 // ==========================================
+// Voice Trigger Alarm
 // frame.js
 // Runs inside TradingView / broker iframe
 // ==========================================
 
-console.log("✅ frame.js loaded");
+console.log("✅ Voice Trigger Alarm - frame.js loaded");
 
 
 // ==========================================
@@ -13,24 +14,38 @@ console.log("✅ frame.js loaded");
 function injectPageScript() {
 
     // Prevent duplicate injection
-    if (document.querySelector(
-        'script[data-voice-horizontal-ray="true"]'
-    )) {
-        console.log("⚠️ pageScript.js already injected");
+    if (
+        document.querySelector(
+            'script[data-voice-price-alert="true"]'
+        )
+    ) {
+
+        console.log(
+            "⚠️ Voice Price Alert pageScript.js already injected"
+        );
+
         return;
     }
 
 
-    const script = document.createElement("script");
+    const script =
+        document.createElement("script");
 
-    script.src = chrome.runtime.getURL("pageScript.js");
 
-    script.dataset.voiceHorizontalRay = "true";
+    script.src =
+        chrome.runtime.getURL("pageScript.js");
+
+
+    // IMPORTANT:
+    // This ID is different from the Horizontal Ray extension
+    script.dataset.voicePriceAlert = "true";
 
 
     script.onload = () => {
 
-        console.log("✅ pageScript.js injected successfully");
+        console.log(
+            "✅ Voice Price Alert pageScript.js injected successfully"
+        );
 
         script.remove();
 
@@ -40,7 +55,7 @@ function injectPageScript() {
     script.onerror = (err) => {
 
         console.error(
-            "❌ Failed to inject pageScript.js",
+            "❌ Failed to inject Voice Price Alert pageScript.js",
             err
         );
 
@@ -63,7 +78,7 @@ injectPageScript();
 
 
 // ==========================================
-// RECEIVE MESSAGE FROM background.js
+// RECEIVE SET ALERT FROM background.js
 // ==========================================
 
 chrome.runtime.onMessage.addListener(
@@ -71,39 +86,108 @@ chrome.runtime.onMessage.addListener(
 
         if (
             !message ||
-            message.action !== "CREATE_HORIZONTAL_RAY"
+            message.action !== "SET_PRICE_ALERT"
         ) {
+
             return;
         }
 
 
         console.log(
-            "📩 frame.js received price:",
-            message.price
+            "📩 Voice Price Alert received:",
+            message
         );
 
 
-        // --------------------------------------
-        // Forward price to pageScript.js
-        // --------------------------------------
+        // ======================================
+        // Forward complete alert information
+        // to pageScript.js
+        // ======================================
 
-        window.dispatchEvent(
+        window.postMessage(
+            {
+                type: "SET_PRICE_ALERT",
 
-            new CustomEvent(
-                "VOICE_HORIZONTAL_RAY",
-                {
-                    detail: {
-                        price: message.price
-                    }
-                }
-            )
+                alertId:
+                    message.alertId,
 
+                targetPrice:
+                    Number(message.targetPrice),
+
+                appName:
+                    message.appName,
+
+                stockName:
+                    message.stockName
+            },
+            "*"
         );
 
 
         console.log(
-            "📤 Price forwarded to pageScript.js:",
-            message.price
+            "📤 Target forwarded to Price Alert pageScript:",
+            {
+                alertId: message.alertId,
+                targetPrice: message.targetPrice,
+                appName: message.appName,
+                stockName: message.stockName
+            }
+        );
+
+    }
+);
+
+
+// ==========================================
+// RECEIVE REMOVE ALERT FROM background.js
+// ==========================================
+
+chrome.runtime.onMessage.addListener(
+    (message, sender, sendResponse) => {
+
+        if (
+            !message ||
+            message.action !== "REMOVE_PRICE_ALERT"
+        ) {
+
+            return;
+        }
+
+
+        console.log(
+            "📩 Remove Price Alert received:",
+            message
+        );
+
+
+        // ======================================
+        // Forward complete remove information
+        // ======================================
+
+        window.postMessage(
+            {
+                type: "REMOVE_PRICE_ALERT",
+
+                alertId:
+                    message.alertId,
+
+                appName:
+                    message.appName,
+
+                stockName:
+                    message.stockName
+            },
+            "*"
+        );
+
+
+        console.log(
+            "📤 Remove command forwarded:",
+            {
+                alertId: message.alertId,
+                appName: message.appName,
+                stockName: message.stockName
+            }
         );
 
     }
