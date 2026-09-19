@@ -1,237 +1,436 @@
 /* ==========================================
-   Voice Horizontal Ray
+   Voice Trigger Alarm
    content.css
 ========================================== */
 
-#voice-horizontal-ray-root{
-    position:fixed;
-    top:50%;
-    right:20px;
-    transform:translateY(-50%);
-    z-index:999999999;
-    font-family:Arial,Helvetica,sans-serif;
-}
 
-/* Floating Mic */
+/* ==========================================
+   Voice Trigger Alarm Root
+========================================== */
 
-#vhr-mic-button{
+#voice-price-alert-root {
 
-    width:60px;
-    height:60px;
+    position: fixed;
 
-    border-radius:50%;
+    right: 20px;
 
-    background:#2563eb;
+    bottom: 20px;
 
-    color:white;
+    z-index: 2147483647;
 
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    font-size:30px;
-
-    cursor:pointer;
-
-    box-shadow:0 8px 20px rgba(0,0,0,.25);
-
-    transition:.25s;
-
-    user-select:none;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
 }
 
-#vhr-mic-button:hover{
 
-    transform:scale(1.08);
+/* ==========================================
+   Floating Warning Button
+========================================== */
+
+#vpa-warning-button {
+
+    width: 60px;
+
+    height: 60px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #f59e0b;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 32px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.25);
+
+    transition: .25s;
+
+    user-select: none;
+
+    border: 3px solid #facc15;
 
 }
 
-/* Panel */
 
-#vhr-panel{
+/* Hover */
 
-    position:absolute;
+#vpa-warning-button:hover {
 
-    right:75px;
+    transform: scale(1.08);
 
-    top:-60px;
-
-    width:320px;
-
-    background:white;
-
-    border-radius:14px;
-
-    box-shadow:0 15px 40px rgba(0,0,0,.25);
-
-    padding:18px;
-
-    display:none;
-
-    animation:fadeIn .25s;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.30);
 
 }
+
+
+/* ==========================================
+   Price Alert Panel
+========================================== */
+
+#vpa-panel {
+
+    position: absolute;
+
+    right: 75px;
+
+    bottom: 0;
+
+    width: 320px;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.25);
+
+    padding: 18px;
+
+    display: none;
+
+    animation: vpaFadeIn .25s;
+
+}
+
 
 /* Open */
 
-#vhr-panel.open{
+#vpa-panel.open {
 
-    display:block;
+    display: block;
+
+}
+
+
+/* ==========================================
+   Header
+========================================== */
+
+#vpa-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    margin-bottom: 15px;
 
 }
 
-/* Header */
-
-#vhr-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    font-size:18px;
-
-    font-weight:bold;
-
-    margin-bottom:15px;
-
-}
 
 /* Close */
 
-#vhr-close{
+#vpa-close {
 
-    border:none;
+    border: none;
 
-    background:none;
+    background: none;
 
-    font-size:20px;
+    font-size: 20px;
 
-    cursor:pointer;
-
-}
-
-/* Sections */
-
-.vhr-section{
-
-    margin-bottom:15px;
+    cursor: pointer;
 
 }
 
-/* Status */
 
-#vhr-status{
+/* ==========================================
+   Sections
+========================================== */
 
-    background:#f3f4f6;
+.vpa-section {
 
-    padding:10px;
-
-    border-radius:8px;
-
-    font-size:14px;
+    margin-bottom: 15px;
 
 }
 
-/* Buttons */
 
-#vhr-speak,
-#vhr-submit{
+/* ==========================================
+   Status
+========================================== */
 
-    width:100%;
+#vpa-status {
 
-    border:none;
+    background: #f3f4f6;
 
-    border-radius:8px;
+    padding: 10px;
 
-    padding:12px;
+    border-radius: 8px;
 
-    font-size:16px;
-
-    cursor:pointer;
-
-    transition:.2s;
+    font-size: 14px;
 
 }
 
-#vhr-speak{
 
-    background:#2563eb;
+/* ==========================================
+   Speak Button
+========================================== */
 
-    color:white;
+#vpa-speak {
 
-}
+    width: 100%;
 
-#vhr-speak:hover{
+    border: none;
 
-    background:#1d4ed8;
+    border-radius: 8px;
 
-}
+    padding: 12px;
 
-#vhr-submit{
+    font-size: 16px;
 
-    background:#16a34a;
+    cursor: pointer;
 
-    color:white;
+    transition: .2s;
 
-}
+    background: #2563eb;
 
-#vhr-submit:hover{
-
-    background:#15803d;
-
-}
-
-/* Textbox */
-
-#vhr-price{
-
-    width:100%;
-
-    padding:12px;
-
-    margin-top:8px;
-
-    font-size:18px;
-
-    border-radius:8px;
-
-    border:1px solid #d1d5db;
-
-    box-sizing:border-box;
+    color: white;
 
 }
 
-#vhr-price:focus{
 
-    outline:none;
+#vpa-speak:hover {
 
-    border-color:#2563eb;
+    background: #1d4ed8;
 
 }
 
-/* Animation */
 
-@keyframes fadeIn{
+#vpa-speak:disabled {
 
-    from{
+    opacity: .6;
 
-        opacity:0;
+    cursor: not-allowed;
 
-        transform:translateX(15px);
+}
+
+
+/* ==========================================
+   Submit Button
+========================================== */
+
+#vpa-submit {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+    background: #16a34a;
+
+    color: white;
+
+}
+
+
+#vpa-submit:hover {
+
+    background: #15803d;
+
+}
+
+
+/* ==========================================
+   Price Input
+========================================== */
+
+#vpa-price {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 8px;
+
+    font-size: 18px;
+
+    border-radius: 8px;
+
+    border: 1px solid #d1d5db;
+
+    box-sizing: border-box;
+
+}
+
+
+#vpa-price:focus {
+
+    outline: none;
+
+    border-color: #2563eb;
+
+}
+
+
+/* ==========================================
+   Active Alert
+========================================== */
+
+#vpa-active {
+
+    background: #fef9c3;
+
+    border-left: 5px solid #facc15;
+
+    padding: 10px;
+
+    border-radius: 8px;
+
+    margin-top: 10px;
+
+    font-weight: bold;
+
+}
+
+
+/* ==========================================
+   Remove Alert Button
+========================================== */
+
+#vpa-remove {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    margin-top: 8px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    background: #dc2626;
+
+    color: white;
+
+}
+
+
+#vpa-remove:hover {
+
+    background: #b91c1c;
+
+}
+
+
+/* ==========================================
+   Animation
+========================================== */
+
+@keyframes vpaFadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateX(15px);
 
     }
 
-    to{
+    to {
 
-        opacity:1;
+        opacity: 1;
 
-        transform:translateX(0);
+        transform:
+            translateX(0);
 
     }
 
+}
+
+/* =========================================================
+   Multiple Price Alerts
+   ========================================================= */
+
+#vpa-alert-list {
+    margin-top: 12px;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.vpa-alert-list-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #ddd;
+}
+
+.vpa-alert-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    padding: 8px 10px;
+    margin-bottom: 6px;
+
+    background: #fef9c3;
+
+    border-left: 4px solid #facc15;
+    border-radius: 6px;
+}
+
+.vpa-alert-row-price {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.vpa-alert-row-remove {
+    border: none;
+
+    background: #ef4444;
+    color: white;
+
+    padding: 5px 9px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+.vpa-alert-row-remove:hover {
+    opacity: 0.85;
+}
+
+.vpa-no-alerts {
+    text-align: center;
+
+    color: #777;
+
+    padding: 10px;
+
+    font-size: 13px;
 }
